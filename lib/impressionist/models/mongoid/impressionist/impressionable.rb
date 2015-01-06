@@ -15,6 +15,9 @@ module Impressionist
       imps = options[:start_date].blank? ? impressions :
         impressions.between(created_at: options[:start_date]..options[:end_date])
 
+      if options[:message]
+        imps = imps.where("impressions.message = ?", options[:message])
+      end
 
       # Count all distinct impressions unless the :all filter is provided
       distinct = options[:filter] != :all
